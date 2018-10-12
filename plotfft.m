@@ -16,7 +16,7 @@ function plotfft(data, fs)
 N = length(data);
 y = fft(data);  % Calculating FFT
 
-% Vector rescaling of sawtooth waveform
+% Vector rescaling for FFT plot
 P2 = abs(y/N);
 P1 = P2(1:N/4+1);
 P1(2:end-1) = 2*P1(2:end-1);
