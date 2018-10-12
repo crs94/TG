@@ -1,4 +1,18 @@
-folder = 'D:\CR_Reference\TG\isokinetic\';
+% Camila Rosa (crs94 @GitHub), 2018
+% ------------
+%   loadtxt:    Loads the txt files from a database
+%   Usage:      Input the name of the directory where
+%               the files are stores and the files
+%               of the folder ../subject/cont will be
+%               loaded into a variable to be save as .mat
+%   Inputs:     
+%               folder =    [char] Path of the directory 
+%                           where the files are stored
+%   Output:     none
+% ------------
+
+function loadtxt(folder)
+
 ldir = struct2cell(dir(folder));
 [R, C] = size(ldir);
 m = 0;
@@ -13,4 +27,6 @@ for n = 1:C
         end
     end
 end
-        
+save('emgdata.mat', 'pos', 'vel', 'ten', 'emg');
+clear all;
+close all;
