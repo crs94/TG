@@ -69,13 +69,13 @@ if ~flag
     % Plotting signal
     figure;
 
-    subplot(2, 1, 1);
+    subplot(2, 2, 1);
     t = (0:N-1)/fs; % Creating time vector
     plot(t, data);  % Signal
     ylabel('Amplitude');
     axis([19 21.5 -inf inf]);
 
-    subplot(2, 1, 2);
+    subplot(2, 2, 2);
     t = (0:N-1)/fs; % Creating time vector
     plot(t, y);  % Signal
     ylabel('Amplitude');
@@ -83,15 +83,15 @@ if ~flag
     axis([19 21.5 -inf inf]);
 
     % Plotting FFT
-    figure;
+    %figure;
 
-    subplot(2, 1, 1);
+    subplot(2, 2, 3);
     f = fs*(0:N/4)/N;   % Creating frequency vector
     plot(f, Xorig(1:N/4+1)); % FFT original
     grid on;
     ylabel('|X_{orig}(t)|');
 
-    subplot(2, 1, 2);
+    subplot(2, 2, 4);
     plot(f, Xfilt(1:N/4+1)); % FFT filtered
     grid on;
     ylabel('|X_{filt}(t)|');
