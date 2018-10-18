@@ -14,23 +14,34 @@
 %   Output:     none
 % ------------
 
-function analyseint(data, fs, inter)
+function [segment] = analyseint(data, fs)
 
 %Creating inital data
 N = length(data);   % Number of samples
-inter = inter*fs;   % Transforming time to sample
-subint = diff(inter, 1, 2)/10;   % Creating subintervals
+wsize = 256;    % Size of window that selects data
+segment = {};
 
-% Craeting series subdivisions (repetitions)
-for n = 1:4
-    subcut{n} = inter(n,1):subint(n):inter(n,2);
-end
+pwrspec = calc_power(data, wsize);    % Calculating power of data
+pwrspec = pwrspec/max(pwrspec); % Normalizing values
+threshold = mean(pwrspec);  % Defining threshold
 
-for n = 1:4
-    for m = 1:10
-        mdf((n-1)*10+m) = medfreq(data(subcut{n}(m):subcut{n}(m+1)));
+k = 1;
+figure;
+hold on;
+for n = 1:length(pwrspec)
+    if pwrspec(n) > threshold
+        m = n;
+        while pwrspec(m) > threshold
+            m = m + 1;
+        end
+        segment{k} = data(n*wsize:m*wsize);
+        plot(segment{k});
+        k = k + 1;
     end
 end
 
-figure;
-plot(mdf);
+%figure;
+%plot(segment);
+%hold on;
+%plot([0 N/wsize], [threshold threshold], 'r--');
+%hold off;
