@@ -15,6 +15,7 @@
 % ------------
 
 function [segment] = analyseint(data, fs)
+close all;
 
 %Creating inital data
 N = length(data);   % Number of samples
@@ -25,18 +26,25 @@ pwrspec = calc_power(data, wsize);    % Calculating power of data
 pwrspec = pwrspec/max(pwrspec); % Normalizing values
 threshold = mean(pwrspec);  % Defining threshold
 
+plot(pwrspec, 'bo'); hold on;
+plot([0 (N/wsize)-1], [threshold threshold], 'r--');
+hold off;
+
 k = 1;
+n = 1;
 figure;
 hold on;
-for n = 1:length(pwrspec)
-    if pwrspec(n) > threshold
+while n > length(pwrspec)
+    if pwrspec(n) >= threshold
         m = n;
         while pwrspec(m) > threshold
             m = m + 1;
         end
         segment{k} = data(n*wsize:m*wsize);
-        plot(segment{k});
+        plot(n:1/wsize:m, segment{k});
         k = k + 1;
+        n = m;
+        pause;
     end
 end
 
